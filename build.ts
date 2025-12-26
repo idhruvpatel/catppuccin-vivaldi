@@ -1,8 +1,7 @@
-// @ts-ignore-next-line: import-a-as-b check doesn't work
-import { variants as flavors } from 'npm:@catppuccin/palette'
-import $ from 'https://deno.land/x/dax@0.19.0/mod.ts'
-import base from './base_settings.json' assert { type: 'json' }
-import uuidMap from './uuid_map.json' assert { type: 'json' }
+import { flavors } from 'npm:@catppuccin/palette'
+import $ from 'npm:dax-sh'
+import base from './base_settings.json' with { type: 'json' }
+import uuidMap from './uuid_map.json' with { type: 'json' }
 
 const FILENAME_BASE = 'Catppuccin'
 const BACKGROUND_BASE = 'gray0_ctp_on_line_background.svg'
@@ -26,7 +25,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.default)) {
   const flavorName = capitalizeFirstLetter(flavor)
 
   // @ts-ignore-next-line: Deno import-from-npm feature with types doesn't work
-  const colors = flavors[flavor]
+  const colors = flavors[flavor].colors
 
   for (const [label, uuid] of Object.entries(labels)) {
     const color = label
@@ -70,7 +69,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.default)) {
     await $`sed -i 's/stroke:#6e6c7e;/stroke:${colorAccentBg};/' ${backgroundSvg}`
     await $`sed -i 's/fill:#2f2c3e/fill:${colorAccentBg}/' ${backgroundSvg}`
     const backgroundJpg = `${workdir}/background.jpg`
-    await $`convert ${backgroundSvg} ${backgroundJpg}`
+    await $`magick ${backgroundSvg} ${backgroundJpg}`
 
     const outfile = `../../${name}.zip`
     await Deno.run({ cmd: ['zip', outfile, 'background.jpg', 'settings.json'], cwd: workdir })
@@ -84,7 +83,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.flat)) {
   const flavorName = capitalizeFirstLetter(flavor)
 
   // @ts-ignore-next-line: Deno import-from-npm feature with types doesn't work
-  const colors = flavors[flavor]
+  const colors = flavors[flavor].colors
 
   for (const [label, uuid] of Object.entries(labels)) {
     const color = label
@@ -126,7 +125,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.flat)) {
     await $`sed -i 's/stroke:#6e6c7e;/stroke:${colorAccentBg};/' ${backgroundSvg}`
     await $`sed -i 's/fill:#2f2c3e/fill:${colorAccentBg}/' ${backgroundSvg}`
     const backgroundJpg = `${workdir}/background.jpg`
-    await $`convert ${backgroundSvg} ${backgroundJpg}`
+    await $`magick ${backgroundSvg} ${backgroundJpg}`
 
     const outfile = `../../${name}.zip`
     await Deno.run({ cmd: ['zip', outfile, 'background.jpg', 'settings.json'], cwd: workdir })
@@ -140,7 +139,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.amoled)) {
   const flavorName = capitalizeFirstLetter(flavor)
 
   // @ts-ignore-next-line: Deno import-from-npm feature with types doesn't work
-  const colors = { ...flavors[flavor], ...AMOLED_FLAVOR }
+  const colors = { ...flavors[flavor].colors, ...AMOLED_FLAVOR }
 
   for (const [label, uuid] of Object.entries(labels)) {
     const color = label
@@ -182,7 +181,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.amoled)) {
     await $`sed -i 's/stroke:#6e6c7e;/stroke:${colorAccentBg};/' ${backgroundSvg}`
     await $`sed -i 's/fill:#2f2c3e/fill:${colorAccentBg}/' ${backgroundSvg}`
     const backgroundJpg = `${workdir}/background.jpg`
-    await $`convert ${backgroundSvg} ${backgroundJpg}`
+    await $`magick ${backgroundSvg} ${backgroundJpg}`
 
     const outfile = `../../${name}.zip`
     await Deno.run({ cmd: ['zip', outfile, 'background.jpg', 'settings.json'], cwd: workdir })
@@ -196,7 +195,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.amoledFlat)) {
   const flavorName = capitalizeFirstLetter(flavor)
 
   // @ts-ignore-next-line: Deno import-from-npm feature with types doesn't work
-  const colors = { ...flavors[flavor], ...AMOLED_FLAVOR }
+  const colors = { ...flavors[flavor].colors, ...AMOLED_FLAVOR }
 
   for (const [label, uuid] of Object.entries(labels)) {
     const color = label
@@ -238,7 +237,7 @@ for (const [flavor, labels] of Object.entries(uuidMap.amoledFlat)) {
     await $`sed -i 's/stroke:#6e6c7e;/stroke:${colorAccentBg};/' ${backgroundSvg}`
     await $`sed -i 's/fill:#2f2c3e/fill:${colorAccentBg}/' ${backgroundSvg}`
     const backgroundJpg = `${workdir}/background.jpg`
-    await $`convert ${backgroundSvg} ${backgroundJpg}`
+    await $`magick ${backgroundSvg} ${backgroundJpg}`
 
     const outfile = `../../${name}.zip`
     await Deno.run({ cmd: ['zip', outfile, 'background.jpg', 'settings.json'], cwd: workdir })
